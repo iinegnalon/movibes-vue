@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import AppLogo from '@/components/icons/AppLogo.vue';
+import { useRouter } from 'vue-router';
+import { ref, watch } from 'vue';
 
 defineProps<{
   drawer: boolean;
 }>();
+
+const router = useRouter();
 
 const menuItems = [
   { title: 'Home', icon: 'mdi-home', to: '/' },
@@ -11,6 +15,20 @@ const menuItems = [
   { title: 'TV Series', icon: 'mdi-television', to: '/tv-series' },
   { title: 'Upcoming', icon: 'mdi-calendar', to: '/upcoming' },
 ];
+
+const selectedPage = ref('/');
+
+changeSelectedPage();
+
+watch(router.currentRoute, () => {
+  changeSelectedPage();
+});
+
+function changeSelectedPage() {
+  selectedPage.value =
+    menuItems.find((i) => i.to == router.currentRoute.value.fullPath)?.to ??
+    '/';
+}
 
 function logout() {}
 </script>
@@ -22,7 +40,7 @@ function logout() {}
       <div class="nav-list">
         <RouterLink
           class="nav-list-item"
-          :class="{ 'nav-list-item_selected': $route.path === item.to }"
+          :class="{ 'nav-list-item_selected': selectedPage === item.to }"
           v-for="(item, index) in menuItems"
           :key="index"
           :to="item.to"
