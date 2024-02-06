@@ -11,6 +11,8 @@ const menuItems = [
   { title: 'TV Series', icon: 'mdi-television', to: '/tv-series' },
   { title: 'Upcoming', icon: 'mdi-calendar', to: '/upcoming' },
 ];
+
+function logout() {}
 </script>
 
 <template>
@@ -20,6 +22,7 @@ const menuItems = [
       <div class="nav-list">
         <RouterLink
           class="nav-list-item"
+          :class="{ 'nav-list-item_selected': $route.path === item.to }"
           v-for="(item, index) in menuItems"
           :key="index"
           :to="item.to"
@@ -32,7 +35,7 @@ const menuItems = [
             </div>
           </div>
         </RouterLink>
-        <div class="nav-list-item">
+        <div @click="logout" class="nav-list-item">
           <div class="nav-list-item__row">
             <v-icon class="nav-list-item__icon" icon="mdi-logout"></v-icon>
             <div class="nav-list-item__title">Logout</div>
@@ -68,7 +71,7 @@ const menuItems = [
 .logo {
   width: 118px;
   height: 42px;
-  margin: 55px 55px 80px;
+  margin: 55px;
 }
 
 .nav-list-item {

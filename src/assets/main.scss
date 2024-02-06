@@ -1,8 +1,15 @@
-.v-text-field.text-field_primary {
+.text-field_primary.v-text-field {
   input::placeholder {
     color: var(--color-secondary);
     opacity: 1;
     font-size: 20px;
     font-weight: var(--semi-bold);
+  }
+}
+
+.checkbox-btn_primary {
+  .v-checkbox-btn {
+    flex-direction: row-reverse;
+    justify-content: space-between;
   }
 }

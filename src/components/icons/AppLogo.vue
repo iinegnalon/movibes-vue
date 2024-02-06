@@ -1,3 +1,5 @@
+<script setup lang="ts"></script>
+
 <template>
   <svg
     width="130"
@@ -51,5 +53,3 @@
     </defs>
   </svg>
 </template>
-
-<script setup lang="ts"></script>

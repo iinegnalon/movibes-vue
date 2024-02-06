@@ -44,7 +44,7 @@ function openNav() {
 .header {
   display: flex;
   align-items: center;
-  margin: 20px 25px 20px 0;
+  margin: 20px 25px;
 }
 
 .search {
