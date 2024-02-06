@@ -6,7 +6,7 @@ export const movies: Movie[] = [
     title: 'Movie 1',
     image: '/images/movie.png',
     description: 'Description of Movie 1',
-    slug: 'movie-1',
+    slug: '/movies/movie-1',
     rating: 4.5,
   },
   {
@@ -14,7 +14,7 @@ export const movies: Movie[] = [
     title: 'Movie 2',
     image: '/images/movie.png',
     description: 'Description of Movie 2',
-    slug: 'movie-2',
+    slug: '/movies/movie2',
     rating: 3.8,
   },
   {
@@ -22,7 +22,7 @@ export const movies: Movie[] = [
     title: 'Movie 3',
     image: '/images/movie.png',
     description: 'Description of Movie 3',
-    slug: 'movie-3',
+    slug: '/movies/movie3',
     rating: 10.0,
   },
   {
@@ -30,7 +30,7 @@ export const movies: Movie[] = [
     title: 'Movie 4',
     image: '/images/movie.png',
     description: 'Description of Movie 4',
-    slug: 'movie-4',
+    slug: '/movies/movie4',
     rating: 4.0,
   },
 ];

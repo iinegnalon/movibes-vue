@@ -6,7 +6,7 @@ import CategoriesFilter from '@/components/layout/CategoriesFilter.vue';
 
 withDefaults(
   defineProps<{
-    withCategories: boolean;
+    withCategories?: boolean;
   }>(),
   {
     withCategories: true,

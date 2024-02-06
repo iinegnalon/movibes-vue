@@ -26,7 +26,9 @@ watch(router.currentRoute, () => {
 
 function changeSelectedPage() {
   selectedPage.value =
-    menuItems.find((i) => i.to == router.currentRoute.value.fullPath)?.to ??
+    menuItems
+      .slice(1)
+      .find((i) => router.currentRoute.value.fullPath.startsWith(i.to))?.to ??
     '/';
 }
 
