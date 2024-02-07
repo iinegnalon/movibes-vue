@@ -12,7 +12,6 @@ const props = defineProps<{
 }>();
 
 const router = useRouter();
-
 const store = useStore();
 
 const moviesLoading = ref(true);
@@ -24,6 +23,7 @@ const notificationSnackbar = ref({
 });
 const movies: Ref<MovieListItem[]> = ref([]);
 const currentPage = ref(1);
+const endPage = ref(false);
 const scrollElement = ref<Element | null>(null);
 
 onMounted(() => {
@@ -39,15 +39,28 @@ onUnmounted(() => {
 watch(router.currentRoute, () => {
   currentPage.value = 1;
   movies.value = [];
+  endPage.value = false;
   getInfo();
 });
 
 async function getInfo() {
+  if (endPage.value) {
+    return;
+  }
+
   moviesLoading.value = true;
   store.commit('layoutStore/setLoading', true);
   try {
-    const response = await getMoviesFunction(props.listType, currentPage.value);
+    const response = await getMoviesFunction(
+      props.listType,
+      currentPage.value,
+      router.currentRoute.value.query.searchQuery?.toString() ?? '',
+    );
     movies.value = [...movies.value, ...response.data.results];
+
+    if (response.data.results.length == 0) {
+      endPage.value = true;
+    }
   } catch (e) {
     notificationSnackbar.value.show = true;
     notificationSnackbar.value.message =
@@ -81,7 +94,13 @@ function handleScroll() {
         :movie="movie"
       />
     </div>
-    <p v-else-if="!moviesLoading">Can't load movies.</p>
+    <p v-else-if="!moviesLoading">
+      {{
+        listType == 'search'
+          ? "Can't find movies by this query."
+          : "Can't load movies."
+      }}
+    </p>
     <v-snackbar
       v-model="notificationSnackbar.show"
       :color="notificationSnackbar.color"

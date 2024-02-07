@@ -34,7 +34,7 @@ function getDetailsPath(movie: MovieListItem) {
     >
       <div class="movie-card__rating">
         <v-icon color="#e5b516">mdi-star</v-icon>
-        <span>{{ movie.vote_average.toFixed(1) }}</span>
+        <span>{{ movie.vote_average?.toFixed(1) ?? '0.0' }}</span>
       </div>
     </v-card>
   </div>

@@ -1,5 +1,6 @@
 import {
   getMovieList,
+  getSearchList,
   getTrendingList,
   getTvSeriesList,
   getUpcomingList,
@@ -39,7 +40,11 @@ export function formatRundown(minutes: number) {
   return `${hoursString} ${minutesString}`;
 }
 
-export function getMoviesFunction(listType: string, currentPage: number) {
+export function getMoviesFunction(
+  listType: string,
+  currentPage: number,
+  searchQuery: string = '',
+) {
   switch (listType) {
     case 'movie': {
       return getMovieList(currentPage);
@@ -52,6 +57,9 @@ export function getMoviesFunction(listType: string, currentPage: number) {
     }
     case 'trending': {
       return getTrendingList(currentPage);
+    }
+    case 'search': {
+      return getSearchList(currentPage, searchQuery);
     }
     default: {
       return getMovieList(currentPage);

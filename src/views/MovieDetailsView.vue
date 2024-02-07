@@ -65,7 +65,7 @@ async function getInfo() {
       <div class="movie-info">
         <h2 class="movie-info__title">
           <span>{{ movieDetails.title ?? movieDetails.name }}</span>
-          <span>
+          <span v-if="movieDetails.release_date || movieDetails.first_air_date">
             •
             {{
               new Date(
@@ -73,7 +73,13 @@ async function getInfo() {
               ).getFullYear()
             }}</span
           >
-          <span v-if="movieDetails.runtime || movieDetails.episode_run_time[0]">
+          <span
+            v-if="
+              movieDetails.runtime ||
+              (movieDetails.episode_run_time &&
+                movieDetails.episode_run_time[0])
+            "
+          >
             •
             {{
               formatRundown(

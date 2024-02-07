@@ -73,6 +73,18 @@ const router = createRouter({
       ],
     },
     {
+      path: '/search',
+      component: AppLayout,
+      children: [
+        {
+          path: '',
+          name: 'Movibes • Search',
+          component: MovieTypeView,
+          props: { listType: 'search' },
+        },
+      ],
+    },
+    {
       path: '/movies/:movieId',
       component: AppLayout,
       props: {

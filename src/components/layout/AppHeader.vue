@@ -1,15 +1,22 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 const emits = defineEmits(['nav-click']);
 
+const router = useRouter();
 const store = useStore();
 
 const searchQuery = ref('');
 
 function search() {
+  if (!searchQuery.value) {
+    return;
+  }
+
   store.commit('filtersStore/setSearchQuery', searchQuery.value);
+  router.push(`/search?searchQuery=${store.state.filtersStore.searchQuery}`);
 }
 
 function openNav() {
