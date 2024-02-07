@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import MovieBanner from '@/components/home/MovieBanner.vue';
 import MovieTypeList from '@/components/home/MovieTypeList.vue';
 import type { MovieListItem } from '@/models/movie';
@@ -42,19 +42,19 @@ function handleTrendingLoaded(movie: MovieListItem) {
     <MovieBanner v-if="bannerMovie" :bannerMovie="bannerMovie" />
     <section class="types-list">
       <MovieTypeList
-        @trending-loaded="handleTrendingLoaded"
         v-for="(item, index) in typeItems"
         :key="index"
-        :title="item.title"
-        :listType="item.type"
         :detailsPath="item.detailsPath"
+        :listType="item.type"
         :seeAllPath="item.seeAllPath"
+        :title="item.title"
+        @trending-loaded="handleTrendingLoaded"
       />
     </section>
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .home-page {
   width: 100%;
 }

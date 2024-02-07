@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import AppLogo from '@/components/icons/AppLogo.vue';
 import { useRouter } from 'vue-router';
 import { ref, watch } from 'vue';
@@ -36,26 +36,26 @@ function logout() {}
 </script>
 
 <template>
-  <aside class="sidebar" :class="{ sidebar_open: drawer }">
+  <aside :class="{ sidebar_open: drawer }" class="sidebar">
     <nav class="nav">
       <AppLogo class="logo" />
       <div class="nav-list">
         <RouterLink
-          class="nav-list-item"
-          :class="{ 'nav-list-item_selected': selectedPage === item.to }"
           v-for="(item, index) in menuItems"
           :key="index"
+          :class="{ 'nav-list-item_selected': selectedPage === item.to }"
           :to="item.to"
+          class="nav-list-item"
         >
           <div class="nav-list-item__line"></div>
           <div class="nav-list-item__row">
-            <v-icon class="nav-list-item__icon" :icon="item.icon"></v-icon>
+            <v-icon :icon="item.icon" class="nav-list-item__icon"></v-icon>
             <div class="nav-list-item__title">
               {{ item.title }}
             </div>
           </div>
         </RouterLink>
-        <div @click="logout" class="nav-list-item">
+        <div class="nav-list-item" @click="logout">
           <div class="nav-list-item__row">
             <v-icon class="nav-list-item__icon" icon="mdi-logout"></v-icon>
             <div class="nav-list-item__title">Logout</div>
@@ -66,7 +66,7 @@ function logout() {}
   </aside>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import '@/assets/variables.scss';
 
 .sidebar {

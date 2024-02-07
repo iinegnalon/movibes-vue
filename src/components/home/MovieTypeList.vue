@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import MovieCard from '@/components/MovieCard.vue';
 import { onMounted, ref } from 'vue';
 import type { MovieListItem } from '@/models/movie';
@@ -58,9 +58,9 @@ async function getMovies() {
     </div>
     <div v-else-if="movies && movies.length > 0" class="movie-type-list">
       <MovieCard
-        :detailsPath="detailsPath"
         v-for="movie in movies"
         :key="movie.id"
+        :detailsPath="detailsPath"
         :movie="movie"
       />
     </div>
@@ -74,7 +74,7 @@ async function getMovies() {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import '@/assets/variables.scss';
 
 .movie-type-container {

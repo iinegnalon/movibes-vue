@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import NavigationBar from '@/components/layout/NavigationBar.vue';
 import AppHeader from '@/components/layout/AppHeader.vue';
 import { ref } from 'vue';
@@ -42,8 +42,8 @@ function handleNavClick() {
     <v-progress-linear
       v-if="layoutStore.loading"
       class="progress-loading"
-      indeterminate
       color="primary"
+      indeterminate
     ></v-progress-linear>
   </div>
 </template>

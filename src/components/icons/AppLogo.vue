@@ -1,11 +1,11 @@
-<script setup lang="ts"></script>
+<script lang="ts" setup></script>
 
 <template>
   <svg
-    width="130"
+    fill="none"
     height="54"
     viewBox="0 0 130 54"
-    fill="none"
+    width="130"
     xmlns="http://www.w3.org/2000/svg"
   >
     <g filter="url(#filter0_d_1_550)">
@@ -17,19 +17,19 @@
     <defs>
       <filter
         id="filter0_d_1_550"
+        color-interpolation-filters="sRGB"
+        filterUnits="userSpaceOnUse"
+        height="54"
+        width="130"
         x="0"
         y="0"
-        width="130"
-        height="54"
-        filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
       >
         <feFlood flood-opacity="0" result="BackgroundImageFix" />
         <feColorMatrix
           in="SourceAlpha"
+          result="hardAlpha"
           type="matrix"
           values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-          result="hardAlpha"
         />
         <feOffset dy="2" />
         <feGaussianBlur stdDeviation="3" />
@@ -39,14 +39,14 @@
           values="0 0 0 0 0.239216 0 0 0 0 0.823529 0 0 0 0 0.8 0 0 0 0.45 0"
         />
         <feBlend
-          mode="normal"
           in2="BackgroundImageFix"
+          mode="normal"
           result="effect1_dropShadow_1_550"
         />
         <feBlend
-          mode="normal"
           in="SourceGraphic"
           in2="effect1_dropShadow_1_550"
+          mode="normal"
           result="shape"
         />
       </filter>

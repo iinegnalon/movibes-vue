@@ -27,10 +27,10 @@ function getDetailsPath(movie: MovieListItem) {
     <v-skeleton-loader v-if="loading" class="movie-card"></v-skeleton-loader>
     <v-card
       v-else-if="movie"
-      rounded
       :image="movie.poster_path ? getPosterImage(movie.poster_path) : ''"
-      class="movie-card"
       :to="getDetailsPath(movie)"
+      class="movie-card"
+      rounded
     >
       <div class="movie-card__rating">
         <v-icon color="#e5b516">mdi-star</v-icon>

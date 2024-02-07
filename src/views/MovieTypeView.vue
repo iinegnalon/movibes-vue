@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import MovieCard from '@/components/MovieCard.vue';
 import { onMounted, onUnmounted, type Ref, ref, watch } from 'vue';
 import type { MovieListItem } from '@/models/movie';
@@ -87,10 +87,10 @@ function handleScroll() {
   <div class="movie-type-page">
     <div v-if="movies && movies.length > 0" class="movies-grid">
       <MovieCard
-        :listType="listType"
-        :detailsPath="detailsPath"
         v-for="movie in movies"
         :key="movie.id"
+        :detailsPath="detailsPath"
+        :listType="listType"
         :movie="movie"
       />
     </div>
@@ -110,7 +110,7 @@ function handleScroll() {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import '@/assets/variables.scss';
 
 .movies-grid {

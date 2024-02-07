@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -27,16 +27,16 @@ function openNav() {
 <template>
   <header class="">
     <div class="header">
-      <v-btn @click="openNav" class="nav-btn" icon="mdi-menu"></v-btn>
+      <v-btn class="nav-btn" icon="mdi-menu" @click="openNav"></v-btn>
       <v-text-field
-        rounded
-        prepend-inner-icon="mdi-magnify"
-        type="text"
-        hide-details
-        variant="solo"
-        class="search text-field_primary"
-        placeholder="Search for movies, TV shows..."
         v-model="searchQuery"
+        class="search text-field_primary"
+        hide-details
+        placeholder="Search for movies, TV shows..."
+        prepend-inner-icon="mdi-magnify"
+        rounded
+        type="text"
+        variant="solo"
         @keydown.enter="search"
       />
       <v-spacer></v-spacer>
@@ -46,7 +46,7 @@ function openNav() {
   </header>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import '@/assets/variables.scss';
 
 .nav-btn {

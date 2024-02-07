@@ -15,9 +15,6 @@ const router = createRouter({
           path: '',
           name: '',
           component: HomeView,
-          meta: {
-            title: 'he',
-          },
         },
       ],
     },
@@ -30,9 +27,6 @@ const router = createRouter({
           name: 'Movibes • Movies',
           component: MovieTypeView,
           props: { listType: 'movie', detailsPath: 'movies' },
-          meta: {
-            title: 'he',
-          },
         },
       ],
     },

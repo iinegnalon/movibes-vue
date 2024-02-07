@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useRouter } from 'vue-router';
 import { onMounted, type Ref, ref } from 'vue';
 import { getMovieDetails, getTVSeriesDetails } from '@/api';
@@ -46,13 +46,13 @@ async function getInfo() {
 <template>
   <div class="movie-details-page">
     <v-progress-circular
-      indeterminate
-      color="primary"
       v-if="detailsLoading"
+      color="primary"
+      indeterminate
     ></v-progress-circular>
     <div v-else-if="movieDetails">
       <div class="movie-rating-info">
-        <v-icon size="30" class="movie-rating-info__icon" color="#e5b516">
+        <v-icon class="movie-rating-info__icon" color="#e5b516" size="30">
           mdi-star
         </v-icon>
         <span class="movie-rating-info__rating">{{
@@ -113,7 +113,7 @@ async function getInfo() {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import '@/assets/variables.scss';
 
 .movie-rating-info {

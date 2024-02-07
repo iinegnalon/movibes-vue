@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, ref } from 'vue';
 import type { MovieGenre } from '@/models/movie';
 import { useStore } from 'vuex';
@@ -65,13 +65,13 @@ function handleFiltersChange() {
     </div>
 
     <div class="genre-list">
-      <div class="genre-item" v-for="(genre, index) in genres" :key="index">
+      <div v-for="(genre, index) in genres" :key="index" class="genre-item">
         <v-checkbox
+          v-model="selectedGenres"
+          :value="genre"
           class="checkbox-btn_primary"
           color="primary"
           hide-details
-          v-model="selectedGenres"
-          :value="genre"
           @update:model-value="handleFiltersChange"
         >
           <template #label>
@@ -81,9 +81,9 @@ function handleFiltersChange() {
           </template>
         </v-checkbox>
         <v-divider
-          thickness="2"
           v-if="index < genres.length - 1"
           class="genre-item__divider"
+          thickness="2"
         ></v-divider>
       </div>
     </div>
