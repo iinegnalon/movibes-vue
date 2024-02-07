@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import NavigationBar from '@/components/layout/NavigationBar.vue';
 import AppHeader from '@/components/layout/AppHeader.vue';
-import { ref } from 'vue';
 import CategoriesFilter from '@/components/layout/CategoriesFilter.vue';
 import { useStore } from 'vuex';
 
@@ -17,16 +16,14 @@ withDefaults(
 const store = useStore();
 const layoutStore = store.state.layoutStore;
 
-const drawer = ref(false);
-
 function handleNavClick() {
-  drawer.value = !drawer.value;
+  store.commit('layoutStore/setDrawer', !store.state.layoutStore.drawer);
 }
 </script>
 
 <template>
   <div class="app-container">
-    <NavigationBar :drawer="drawer" />
+    <NavigationBar />
 
     <div class="header-main">
       <AppHeader @nav-click="handleNavClick" />

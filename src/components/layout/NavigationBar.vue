@@ -2,12 +2,11 @@
 import AppLogo from '@/components/icons/AppLogo.vue';
 import { useRouter } from 'vue-router';
 import { ref, watch } from 'vue';
-
-defineProps<{
-  drawer: boolean;
-}>();
+import { useStore } from 'vuex';
 
 const router = useRouter();
+const store = useStore();
+const layoutStore = store.state.layoutStore;
 
 const menuItems = [
   { title: 'Home', icon: 'mdi-home', to: '/' },
@@ -33,10 +32,14 @@ function changeSelectedPage() {
 }
 
 function logout() {}
+
+function handleRouteChange() {
+  store.commit('layoutStore/setDrawer', false);
+}
 </script>
 
 <template>
-  <aside :class="{ sidebar_open: drawer }" class="sidebar">
+  <aside :class="{ sidebar_open: layoutStore.drawer }" class="sidebar">
     <nav class="nav">
       <AppLogo class="logo" />
       <div class="nav-list">
@@ -46,6 +49,7 @@ function logout() {}
           :class="{ 'nav-list-item_selected': selectedPage === item.to }"
           :to="item.to"
           class="nav-list-item"
+          @click="handleRouteChange"
         >
           <div class="nav-list-item__line"></div>
           <div class="nav-list-item__row">
