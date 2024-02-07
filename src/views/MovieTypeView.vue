@@ -1,14 +1,9 @@
 <script setup lang="ts">
 import MovieCard from '@/components/MovieCard.vue';
 import { onMounted, onUnmounted, type Ref, ref, watch } from 'vue';
-import {
-  getMovieList,
-  getTrendingList,
-  getTvSeriesList,
-  getUpcomingList,
-} from '@/api';
 import type { MovieListItem } from '@/models/movie';
 import { useRouter } from 'vue-router';
+import { getMoviesFunction } from '@/utils';
 
 const props = defineProps<{
   listType: string;
@@ -47,7 +42,7 @@ watch(router.currentRoute, () => {
 async function getInfo() {
   moviesLoading.value = true;
   try {
-    const response = await getMoviesFunction();
+    const response = await getMoviesFunction(props.listType, currentPage.value);
     movies.value = [...movies.value, ...response.data.results];
   } catch (e) {
     notificationSnackbar.value.show = true;
@@ -55,26 +50,6 @@ async function getInfo() {
       'Something went wrong. Please try again later.';
   }
   moviesLoading.value = false;
-}
-
-function getMoviesFunction() {
-  switch (props.listType) {
-    case 'movie': {
-      return getMovieList(currentPage.value);
-    }
-    case 'tv': {
-      return getTvSeriesList(currentPage.value);
-    }
-    case 'upcoming': {
-      return getUpcomingList(currentPage.value);
-    }
-    case 'trending': {
-      return getTrendingList(currentPage.value);
-    }
-    default: {
-      return getMovieList(currentPage.value);
-    }
-  }
 }
 
 function handleScroll() {

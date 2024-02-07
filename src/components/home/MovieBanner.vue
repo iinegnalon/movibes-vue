@@ -1,26 +1,39 @@
 <script lang="ts" setup>
+import type { MovieListItem } from '@/models/movie';
+import { getPosterImage } from '@/utils';
+
+defineProps<{
+  bannerMovie: MovieListItem;
+}>();
 function play() {}
 </script>
 
 <template>
-  <section class="movie-banner">
-    <!--todo: real movie-->
-    <v-img src="/images/banner.png" alt="Banner" class="movie-banner__image" />
-    <div class="movie-banner__actions">
-      <v-btn class="action-btn action-btn_play" @click="play">
-        <div class="action-btn__content">
-          <v-icon dark>mdi-play</v-icon>
-          <span class="action-btn__text">Play</span>
-        </div>
-      </v-btn>
-      <v-btn class="action-btn action-btn_info">
-        <RouterLink to="/movie/movie1">
+  <section class="movie-banner-wrapper">
+    <div class="movie-banner">
+      <img
+        :src="getPosterImage(bannerMovie.backdrop_path ?? '')"
+        alt="Banner"
+        class="movie-banner__image"
+      />
+      <div class="movie-banner__actions">
+        <v-btn class="action-btn action-btn_play" @click="play">
           <div class="action-btn__content">
-            <v-icon>mdi-information</v-icon>
-            <span class="action-btn__text">More Info</span>
+            <v-icon dark>mdi-play</v-icon>
+            <span class="action-btn__text">Play</span>
           </div>
-        </RouterLink>
-      </v-btn>
+        </v-btn>
+        <v-btn class="action-btn action-btn_info">
+          <RouterLink
+            :to="`/${bannerMovie.media_type === 'tv' ? 'tv-series' : 'movies'}/${bannerMovie.id}`"
+          >
+            <div class="action-btn__content">
+              <v-icon>mdi-information</v-icon>
+              <span class="action-btn__text">More Info</span>
+            </div>
+          </RouterLink>
+        </v-btn>
+      </div>
     </div>
   </section>
 </template>
@@ -28,20 +41,27 @@ function play() {}
 <style lang="scss" scoped>
 @import '@/assets/variables.scss';
 
+.movie-banner-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
 .movie-banner {
   position: relative;
-  width: 100%;
+  width: fit-content;
   margin-bottom: 18px;
 
   &__image {
     width: 100%;
+    max-height: 400px;
+    border-radius: 20px;
   }
 
   &__actions {
     height: 40px;
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    bottom: 20px;
+    right: 20px;
     display: flex;
     gap: 13px;
     align-items: center;
@@ -75,8 +95,6 @@ function play() {}
 
     &__actions {
       height: 55px;
-      bottom: 10px;
-      right: 10px;
       gap: 26px;
     }
   }

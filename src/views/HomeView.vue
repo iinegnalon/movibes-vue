@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import MovieBanner from '@/components/home/MovieBanner.vue';
 import MovieTypeList from '@/components/home/MovieTypeList.vue';
+import type { MovieListItem } from '@/models/movie';
+import { ref } from 'vue';
+import { getPosterImage } from '@/utils';
 
 const typeItems = [
   {
@@ -9,28 +12,39 @@ const typeItems = [
   },
   {
     title: 'Movies',
-    type: 'movies',
+    type: 'movie',
+    detailsPath: 'movies',
   },
   {
     title: 'TV Series',
-    type: 'tv-series',
+    type: 'tv',
+    detailsPath: 'tv-series',
   },
   {
     title: 'Upcoming',
     type: 'upcoming',
+    detailsPath: 'movies',
   },
 ];
+
+const bannerMovie = ref<MovieListItem | null>(null);
+
+function handleTrendingLoaded(movie: MovieListItem) {
+  bannerMovie.value = movie;
+}
 </script>
 
 <template>
   <div class="home-page">
-    <MovieBanner />
+    <MovieBanner v-if="bannerMovie" :bannerMovie="bannerMovie" />
     <section class="types-list">
       <MovieTypeList
+        @trending-loaded="handleTrendingLoaded"
         v-for="(item, index) in typeItems"
         :key="index"
         :title="item.title"
-        :type="item.type"
+        :listType="item.type"
+        :detailsPath="item.detailsPath"
       />
     </section>
   </div>

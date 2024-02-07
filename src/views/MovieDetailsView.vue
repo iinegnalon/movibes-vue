@@ -73,11 +73,11 @@ async function getInfo() {
               ).getFullYear()
             }}</span
           >
-          <span v-if="movieDetails.runtime || movieDetails.episode_run_time">
+          <span v-if="movieDetails.runtime || movieDetails.episode_run_time[0]">
             •
             {{
               formatRundown(
-                movieDetails.runtime ?? movieDetails.episode_run_time,
+                movieDetails.runtime ?? movieDetails.episode_run_time[0],
               )
             }}</span
           >

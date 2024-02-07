@@ -1,39 +1,9 @@
-import type { MovieListItem } from '@/models/movie';
-
-export const movies: MovieListItem[] = [
-  {
-    id: '1',
-    title: 'Movie 1',
-    image: '/images/movie.png',
-    description: 'Description of Movie 1',
-    slug: '/movies/movie-1',
-    rating: 4.5,
-  },
-  {
-    id: '2',
-    title: 'Movie 2',
-    image: '/images/movie.png',
-    description: 'Description of Movie 2',
-    slug: '/movies/movie2',
-    rating: 3.8,
-  },
-  {
-    id: '3',
-    title: 'Movie 3',
-    image: '/images/movie.png',
-    description: 'Description of Movie 3',
-    slug: '/movies/movie3',
-    rating: 10.0,
-  },
-  {
-    id: '4',
-    title: 'Movie 4',
-    image: '/images/movie.png',
-    description: 'Description of Movie 4',
-    slug: '/movies/movie4',
-    rating: 4.0,
-  },
-];
+import {
+  getMovieList,
+  getTrendingList,
+  getTvSeriesList,
+  getUpcomingList,
+} from '@/api';
 
 export function getPosterImage(posterPath: string) {
   return `https://image.tmdb.org/t/p/original${posterPath}`;
@@ -67,4 +37,24 @@ export function formatRundown(minutes: number) {
   }
 
   return `${hoursString} ${minutesString}`;
+}
+
+export function getMoviesFunction(listType: string, currentPage: number) {
+  switch (listType) {
+    case 'movie': {
+      return getMovieList(currentPage);
+    }
+    case 'tv': {
+      return getTvSeriesList(currentPage);
+    }
+    case 'upcoming': {
+      return getUpcomingList(currentPage);
+    }
+    case 'trending': {
+      return getTrendingList(currentPage);
+    }
+    default: {
+      return getMovieList(currentPage);
+    }
+  }
 }
