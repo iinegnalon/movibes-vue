@@ -1,62 +1,117 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { movies } from '@/utils';
+import { onMounted, type Ref, ref } from 'vue';
+import { getMovieDetails } from '@/api';
+import type { MovieDetails } from '@/models/movie';
+import { formatCount, formatRundown } from '@/utils';
+
+const props = defineProps<{
+  type: string;
+}>();
 
 const router = useRouter();
 
-const movieId = router.currentRoute.value.params.movieId;
-const movie = movies[0];
+const movieId = router.currentRoute.value.params.movieId.toString();
+
+const movieDetails: Ref<MovieDetails | null> = ref(null);
+const detailsLoading = ref(true);
+const notificationSnackbar = ref({
+  show: false,
+  message: '',
+  timeout: 2000,
+  color: 'error',
+});
+
+onMounted(() => {
+  getInfo();
+});
+
+async function getInfo() {
+  detailsLoading.value = true;
+  try {
+    const response = await getMovieDetails(props.type, movieId);
+    movieDetails.value = response.data;
+  } catch (e) {
+    notificationSnackbar.value.show = true;
+    notificationSnackbar.value.message =
+      'Something went wrong. Please try again later.';
+  }
+  detailsLoading.value = false;
+}
 </script>
 
 <template>
   <div class="movie-details-page">
-    <div class="movie-rating-info">
-      <v-icon size="30" class="movie-rating-info__icon" color="#e5b516">
-        mdi-star
-      </v-icon>
-      <span class="movie-rating-info__rating">{{ movie.rating }}</span>
-      <span class="movie-rating-info__count"> | 350k</span>
-    </div>
-    <div class="movie-info">
-      <h2 class="movie-info__title">
-        {{ movie.title }} • 2022 • PG-13 • 2h10m
-      </h2>
-      <div class="movie-info__categories">
-        <div class="movie-category">Action</div>
-        <div class="movie-category">Drama</div>
+    <v-progress-circular
+      indeterminate
+      color="primary"
+      v-if="detailsLoading"
+    ></v-progress-circular>
+    <div v-else-if="movieDetails">
+      <div class="movie-rating-info">
+        <v-icon size="30" class="movie-rating-info__icon" color="#e5b516">
+          mdi-star
+        </v-icon>
+        <span class="movie-rating-info__rating">{{
+          movieDetails.vote_average.toFixed(1)
+        }}</span>
+        <span class="movie-rating-info__count">
+          | {{ formatCount(movieDetails.vote_count) }}</span
+        >
       </div>
+      <div class="movie-info">
+        <h2 class="movie-info__title">
+          <span>{{ movieDetails.title }}</span>
+          <span>
+            • {{ new Date(movieDetails.release_date).getFullYear() }}</span
+          >
+          <span v-if="movieDetails.runtime">
+            • {{ formatRundown(movieDetails.runtime) }}</span
+          >
+        </h2>
+        <div class="movie-info__categories">
+          <div
+            v-for="genre in movieDetails.genres"
+            :key="genre.id"
+            class="movie-category"
+          >
+            {{ genre.name }}
+          </div>
+        </div>
+      </div>
+      <p class="movie-description">
+        {{ movieDetails.overview }}
+      </p>
+
+      <v-snackbar
+        v-model="notificationSnackbar.show"
+        :color="notificationSnackbar.color"
+      >
+        {{ notificationSnackbar.message }}
+      </v-snackbar>
     </div>
-    <p class="movie-description">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Arcu felis bibendum ut
-      tristique et egestas quis ipsum. Sit amet tellus cras adipiscing enim eu
-      turpis. Nunc eget lorem dolor sed. Eget egestas purus viverra accumsan.
-      Tortor at risus viverra adipiscing at in tellus. Ut tellus elementum
-      sagittis vitae et leo duis ut. Accumsan lacus vel facilisis volutpat est
-      velit egestas. Ac placerat vestibulum lectus mauris. Gravida arcu ac
-      tortor dignissim. Enim lobortis scelerisque fermentum dui faucibus. Amet
-      commodo nulla facilisi nullam vehicula ipsum a arcu. Amet consectetur
-      adipiscing elit ut aliquam purus sit amet.
-    </p>
+    <p v-else>Can't load info about this movie.</p>
   </div>
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/variables.scss';
+
 .movie-rating-info {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 
   &__icon {
-    margin-right: 10px;
+    margin-right: 8px;
     margin-bottom: 4px;
   }
 
   &__rating {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: var(--medium);
   }
 
   &__count {
-    font-size: 16px;
+    font-size: 14px;
     color: var(--color-secondary);
     font-weight: var(--medium);
   }
@@ -64,30 +119,75 @@ const movie = movies[0];
 
 .movie-info {
   display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 25px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
 
   &__title {
-    font-size: 23px;
+    font-size: 20px;
     font-weight: var(--medium);
   }
 
   &__categories {
     display: flex;
-    gap: 12px;
+    gap: 8px;
     align-items: center;
   }
 }
 
 .movie-category {
-  padding: 3px 18px;
+  padding: 2px 16px;
   color: rgb(from var(--color-text) r g b / 0.8);
   border: 1px rgb(from var(--color-text) r g b / 0.35) solid;
   border-radius: 15px;
 }
 
 .movie-description {
-  font-size: 20px;
+  font-size: 18px;
+}
+
+@media screen and (min-width: $desktop-breakpoint) {
+  .movie-rating-info {
+    margin-bottom: 30px;
+
+    &__icon {
+      margin-right: 10px;
+      margin-bottom: 4px;
+    }
+
+    &__rating {
+      font-size: 20px;
+    }
+
+    &__count {
+      font-size: 16px;
+    }
+  }
+
+  .movie-info {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 25px;
+
+    &__title {
+      font-size: 23px;
+    }
+
+    &__categories {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+  }
+
+  .movie-category {
+    padding: 3px 18px;
+  }
+
+  .movie-description {
+    font-size: 20px;
+  }
 }
 </style>

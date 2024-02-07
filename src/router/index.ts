@@ -67,54 +67,36 @@ const router = createRouter({
       ],
     },
     {
-      path: '',
+      path: '/movies/:movieId',
       component: AppLayout,
       props: {
         withCategories: false,
       },
       children: [
         {
-          path: '/movies/:movieId',
+          path: '',
+          name: 'movie-details',
           component: MovieDetailsView,
+          props: {
+            type: 'movie',
+          },
         },
       ],
     },
     {
-      path: '',
+      path: '/tv-series/:movieId',
       component: AppLayout,
       props: {
         withCategories: false,
       },
       children: [
         {
-          path: '/tv-series/:movieId',
+          path: '',
+          name: 'tv-series-details',
           component: MovieDetailsView,
-        },
-      ],
-    },
-    {
-      path: '',
-      component: AppLayout,
-      props: {
-        withCategories: false,
-      },
-      children: [
-        {
-          path: '/upcoming/:movieId',
-          component: MovieDetailsView,
-        },
-      ],
-    },
-    {
-      path: '',
-      component: AppLayout,
-      props: {
-        withCategories: false,
-      },
-      children: [
-        {
-          path: '/trending/:movieId',
-          component: MovieDetailsView,
+          props: {
+            type: 'tv',
+          },
         },
       ],
     },

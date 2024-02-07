@@ -1,11 +1,21 @@
 <script setup lang="ts">
 import MovieCard from '@/components/MovieCard.vue';
 import { movies } from '@/utils';
+import { onMounted } from 'vue';
+import { getTrending } from '@/api';
 
 defineProps<{
   type: string;
   title: string;
 }>();
+
+onMounted(() => {
+  getMovies();
+});
+
+async function getMovies() {
+  const trending = await getTrending();
+}
 </script>
 
 <template>

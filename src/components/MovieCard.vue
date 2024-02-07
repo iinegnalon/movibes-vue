@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { Movie } from '@/models/movie.ts';
+import type { MovieListItem } from '@/models/movie';
 
 defineProps<{
-  movie: Movie;
+  movie: MovieListItem;
 }>();
 </script>
 <template>
