@@ -1,7 +1,36 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import type { MovieGenre } from '@/models/movie';
+import { useStore } from 'vuex';
 
-const genres = ['Action', 'Comedy', 'Drama', 'Fantasy', 'Horror', 'Sci-Fi'];
+const store = useStore();
+
+const genres: MovieGenre[] = [
+  {
+    id: 1,
+    name: 'Action',
+  },
+  {
+    id: 2,
+    name: 'Adventure',
+  },
+  {
+    id: 3,
+    name: 'Animated',
+  },
+  {
+    id: 4,
+    name: 'Comedy',
+  },
+  {
+    id: 5,
+    name: 'Crime',
+  },
+  {
+    id: 6,
+    name: 'Fantasy',
+  },
+];
 
 const selectedGenres = ref([...genres]);
 
@@ -12,10 +41,15 @@ const allUnchecked = computed(() => {
 function handleCheckClick() {
   if (allUnchecked.value) {
     selectedGenres.value = [...genres];
-    return;
+  } else {
+    selectedGenres.value = [];
   }
 
-  selectedGenres.value = [];
+  handleFiltersChange();
+}
+
+function handleFiltersChange() {
+  store.commit('filtersStore/setSelectedCategories', selectedGenres.value);
 }
 </script>
 
@@ -38,10 +72,11 @@ function handleCheckClick() {
           hide-details
           v-model="selectedGenres"
           :value="genre"
+          @update:model-value="handleFiltersChange"
         >
           <template #label>
             <span class="checkbox-label">
-              {{ genre }}
+              {{ genre.name }}
             </span>
           </template>
         </v-checkbox>

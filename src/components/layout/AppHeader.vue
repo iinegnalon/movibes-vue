@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useStore } from 'vuex';
 
 const emits = defineEmits(['nav-click']);
 
+const store = useStore();
+
 const searchQuery = ref('');
 
-function search() {}
+function search() {
+  store.commit('filtersStore/setSearchQuery', searchQuery.value);
+}
 
 function openNav() {
   emits('nav-click');
