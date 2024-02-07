@@ -2,7 +2,7 @@
 import MovieCard from '@/components/MovieCard.vue';
 import { movies } from '@/utils';
 import { onMounted } from 'vue';
-import { getTrending } from '@/api';
+import { getTrendingList } from '@/api';
 
 defineProps<{
   type: string;
@@ -14,7 +14,7 @@ onMounted(() => {
 });
 
 async function getMovies() {
-  const trending = await getTrending();
+  const trending = await getTrendingList();
 }
 </script>
 

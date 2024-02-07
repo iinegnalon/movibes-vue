@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { onMounted, type Ref, ref } from 'vue';
-import { getMovieDetails } from '@/api';
-import type { MovieDetails } from '@/models/movie';
+import { getMovieDetails, getTVSeriesDetails } from '@/api';
+import type { MovieDetails, TVSeriesDetails } from '@/models/movie';
 import { formatCount, formatRundown } from '@/utils';
 
 const props = defineProps<{
-  type: string;
+  movieType: string;
 }>();
 
 const router = useRouter();
 
 const movieId = router.currentRoute.value.params.movieId.toString();
 
-const movieDetails: Ref<MovieDetails | null> = ref(null);
+const movieDetails: Ref<MovieDetails | TVSeriesDetails | null> = ref(null);
 const detailsLoading = ref(true);
 const notificationSnackbar = ref({
   show: false,
@@ -29,8 +29,11 @@ onMounted(() => {
 async function getInfo() {
   detailsLoading.value = true;
   try {
-    const response = await getMovieDetails(props.type, movieId);
+    const response = await (props.movieType == 'movie'
+      ? getMovieDetails(movieId)
+      : getTVSeriesDetails(movieId));
     movieDetails.value = response.data;
+    document.title = `Movibes • ${movieDetails.value.title ?? movieDetails.value.name}`;
   } catch (e) {
     notificationSnackbar.value.show = true;
     notificationSnackbar.value.message =
@@ -61,12 +64,22 @@ async function getInfo() {
       </div>
       <div class="movie-info">
         <h2 class="movie-info__title">
-          <span>{{ movieDetails.title }}</span>
+          <span>{{ movieDetails.title ?? movieDetails.name }}</span>
           <span>
-            • {{ new Date(movieDetails.release_date).getFullYear() }}</span
+            •
+            {{
+              new Date(
+                movieDetails.release_date ?? movieDetails.first_air_date,
+              ).getFullYear()
+            }}</span
           >
-          <span v-if="movieDetails.runtime">
-            • {{ formatRundown(movieDetails.runtime) }}</span
+          <span v-if="movieDetails.runtime || movieDetails.episode_run_time">
+            •
+            {{
+              formatRundown(
+                movieDetails.runtime ?? movieDetails.episode_run_time,
+              )
+            }}</span
           >
         </h2>
         <div class="movie-info__categories">

@@ -13,8 +13,11 @@ const router = createRouter({
       children: [
         {
           path: '',
-          name: 'home',
+          name: '',
           component: HomeView,
+          meta: {
+            title: 'he',
+          },
         },
       ],
     },
@@ -24,9 +27,12 @@ const router = createRouter({
       children: [
         {
           path: '',
-          name: 'movies',
+          name: 'Movibes • Movies',
           component: MovieTypeView,
-          props: { movieType: 'movies' },
+          props: { listType: 'movie', detailsPath: 'movies' },
+          meta: {
+            title: 'he',
+          },
         },
       ],
     },
@@ -36,9 +42,9 @@ const router = createRouter({
       children: [
         {
           path: '',
-          name: 'tv-series',
+          name: 'Movibes • TV-Series',
           component: MovieTypeView,
-          props: { movieType: 'tv-series' },
+          props: { listType: 'tv', detailsPath: 'tv-series' },
         },
       ],
     },
@@ -48,9 +54,9 @@ const router = createRouter({
       children: [
         {
           path: '',
-          name: 'upcoming',
+          name: 'Movibes • Upcoming',
           component: MovieTypeView,
-          props: { movieType: 'upcoming' },
+          props: { listType: 'upcoming', detailsPath: 'movies' },
         },
       ],
     },
@@ -60,9 +66,9 @@ const router = createRouter({
       children: [
         {
           path: '',
-          name: 'trending',
+          name: 'Movibes • Trending',
           component: MovieTypeView,
-          props: { movieType: 'trending' },
+          props: { listType: 'trending' },
         },
       ],
     },
@@ -75,10 +81,10 @@ const router = createRouter({
       children: [
         {
           path: '',
-          name: 'movie-details',
+          name: 'Movibes • Movie Details',
           component: MovieDetailsView,
           props: {
-            type: 'movie',
+            movieType: 'movie',
           },
         },
       ],
@@ -92,15 +98,20 @@ const router = createRouter({
       children: [
         {
           path: '',
-          name: 'tv-series-details',
+          name: 'Movibes • TV-Series Details',
           component: MovieDetailsView,
           props: {
-            type: 'tv',
+            movieType: 'tv',
           },
         },
       ],
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  document.title = to.name?.toString() || 'Movibes';
+  next();
 });
 
 export default router;
