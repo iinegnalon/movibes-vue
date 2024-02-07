@@ -3,27 +3,30 @@ import MovieBanner from '@/components/home/MovieBanner.vue';
 import MovieTypeList from '@/components/home/MovieTypeList.vue';
 import type { MovieListItem } from '@/models/movie';
 import { ref } from 'vue';
-import { getPosterImage } from '@/utils';
 
 const typeItems = [
   {
     title: 'Trending',
     type: 'trending',
+    seeAllPath: 'trending',
   },
   {
     title: 'Movies',
     type: 'movie',
     detailsPath: 'movies',
+    seeAllPath: 'movies',
   },
   {
     title: 'TV Series',
     type: 'tv',
     detailsPath: 'tv-series',
+    seeAllPath: 'tv-series',
   },
   {
     title: 'Upcoming',
     type: 'upcoming',
     detailsPath: 'movies',
+    seeAllPath: 'upcoming',
   },
 ];
 
@@ -45,6 +48,7 @@ function handleTrendingLoaded(movie: MovieListItem) {
         :title="item.title"
         :listType="item.type"
         :detailsPath="item.detailsPath"
+        :seeAllPath="item.seeAllPath"
       />
     </section>
   </div>

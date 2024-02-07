@@ -4,6 +4,7 @@ import { onMounted, onUnmounted, type Ref, ref, watch } from 'vue';
 import type { MovieListItem } from '@/models/movie';
 import { useRouter } from 'vue-router';
 import { getMoviesFunction } from '@/utils';
+import { useStore } from 'vuex';
 
 const props = defineProps<{
   listType: string;
@@ -11,6 +12,8 @@ const props = defineProps<{
 }>();
 
 const router = useRouter();
+
+const store = useStore();
 
 const moviesLoading = ref(true);
 const notificationSnackbar = ref({
@@ -41,6 +44,7 @@ watch(router.currentRoute, () => {
 
 async function getInfo() {
   moviesLoading.value = true;
+  store.commit('layoutStore/setLoading', true);
   try {
     const response = await getMoviesFunction(props.listType, currentPage.value);
     movies.value = [...movies.value, ...response.data.results];
@@ -50,6 +54,7 @@ async function getInfo() {
       'Something went wrong. Please try again later.';
   }
   moviesLoading.value = false;
+  store.commit('layoutStore/setLoading', false);
 }
 
 function handleScroll() {

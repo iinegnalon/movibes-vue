@@ -5,6 +5,7 @@ import { getPosterImage } from '@/utils';
 defineProps<{
   bannerMovie: MovieListItem;
 }>();
+
 function play() {}
 </script>
 
@@ -73,7 +74,7 @@ function play() {}
   padding: 6px 12px;
   border: none;
   border-radius: 15px;
-  background: rgb(from var(--color-text) r g b / 0.1);
+  background: rgba(232, 232, 232, 0.1);
   backdrop-filter: blur(5px);
   text-transform: none;
 

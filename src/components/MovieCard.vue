@@ -63,7 +63,7 @@ function getDetailsPath(movie: MovieListItem) {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgb(from var(--color-text) r g b / 0.15);
+    background: rgba(232, 232, 232, 0.15);
     backdrop-filter: blur(10px);
     padding: 3px;
     border-radius: 0 20px;

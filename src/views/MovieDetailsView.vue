@@ -151,8 +151,8 @@ async function getInfo() {
 
 .movie-category {
   padding: 2px 16px;
-  color: rgb(from var(--color-text) r g b / 0.8);
-  border: 1px rgb(from var(--color-text) r g b / 0.35) solid;
+  color: rgba(232, 232, 232, 0.8);
+  border: 1px rgba(232, 232, 232, 0.35) solid;
   border-radius: 15px;
 }
 

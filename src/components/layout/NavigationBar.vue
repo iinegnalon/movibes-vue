@@ -111,7 +111,7 @@ function logout() {}
 
   &:hover,
   &_selected {
-    background: rgb(from var(--color-primary) r g b / 0.4);
+    background: rgba(61, 210, 204, 0.4);
 
     .nav-list-item__title,
     .nav-list-item__icon {
@@ -131,7 +131,7 @@ function logout() {}
     right: 0;
     height: 100%;
     width: 6px;
-    background: rgb(from var(--color-primary) r g b / 0.75);
+    background: rgba(61, 210, 204, 0.75);
   }
 
   &__row {

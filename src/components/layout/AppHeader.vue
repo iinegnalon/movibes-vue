@@ -13,22 +13,24 @@ function openNav() {
 </script>
 
 <template>
-  <header class="header">
-    <v-btn @click="openNav" class="nav-btn" icon="mdi-menu"></v-btn>
-    <v-text-field
-      rounded
-      prepend-inner-icon="mdi-magnify"
-      type="text"
-      hide-details
-      variant="solo"
-      class="search text-field_primary"
-      placeholder="Search for movies, TV shows..."
-      v-model="searchQuery"
-      @keydown.enter="search"
-    />
-    <v-spacer></v-spacer>
-    <v-btn class="notifications-btn" icon="mdi-bell"></v-btn>
-    <v-avatar class="user-avatar" image="/images/user-avatar.png"></v-avatar>
+  <header class="">
+    <div class="header">
+      <v-btn @click="openNav" class="nav-btn" icon="mdi-menu"></v-btn>
+      <v-text-field
+        rounded
+        prepend-inner-icon="mdi-magnify"
+        type="text"
+        hide-details
+        variant="solo"
+        class="search text-field_primary"
+        placeholder="Search for movies, TV shows..."
+        v-model="searchQuery"
+        @keydown.enter="search"
+      />
+      <v-spacer></v-spacer>
+      <v-btn class="notifications-btn" icon="mdi-bell"></v-btn>
+      <v-avatar class="user-avatar" image="/images/user-avatar.png"></v-avatar>
+    </div>
   </header>
 </template>
 

@@ -8,6 +8,7 @@ const props = defineProps<{
   listType: string;
   title: string;
   detailsPath: string;
+  seeAllPath: string;
 }>();
 
 const emit = defineEmits(['trendingLoaded']);
@@ -47,7 +48,7 @@ async function getMovies() {
     <div class="movie-type-container__header">
       <h2 class="movie-type-container__title">{{ title }}</h2>
       <v-btn variant="plain">
-        <RouterLink :to="`/${listType}`">
+        <RouterLink :to="`/${seeAllPath}`">
           <span class="movie-type-container__btn">See all</span>
         </RouterLink>
       </v-btn>

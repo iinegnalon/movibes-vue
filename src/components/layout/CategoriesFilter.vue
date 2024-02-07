@@ -1,11 +1,20 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const genres = ['Action', 'Comedy', 'Drama', 'Fantasy', 'Horror', 'Sci-Fi'];
 
 const selectedGenres = ref([...genres]);
 
-function uncheckAll() {
+const allUnchecked = computed(() => {
+  return selectedGenres.value.length === 0;
+});
+
+function handleCheckClick() {
+  if (allUnchecked.value) {
+    selectedGenres.value = [...genres];
+    return;
+  }
+
   selectedGenres.value = [];
 }
 </script>
@@ -14,8 +23,10 @@ function uncheckAll() {
   <div class="categories-filter">
     <div class="categories-header">
       <span class="categories-title">Categories</span>
-      <v-btn class="uncheck-btn" variant="plain" @click="uncheckAll">
-        <span class="uncheck-btn__text"> Uncheck all </span>
+      <v-btn class="uncheck-btn" variant="plain" @click="handleCheckClick">
+        <span class="uncheck-btn__text">
+          {{ allUnchecked ? 'Check' : 'Uncheck' }} all
+        </span>
       </v-btn>
     </div>
 
@@ -55,6 +66,7 @@ function uncheckAll() {
 .categories-header {
   margin-bottom: 30px;
   display: flex;
+  justify-content: space-between;
 }
 
 .categories-title {
@@ -76,7 +88,7 @@ function uncheckAll() {
   width: 254px;
   padding: 5px 15px;
   border-radius: 30px;
-  background: rgb(from var(--color-secondary) r g b / 0.1);
+  background: rgba(102, 102, 102, 0.1);
 }
 
 .checkbox-label {

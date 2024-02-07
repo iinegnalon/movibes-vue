@@ -3,6 +3,7 @@ import NavigationBar from '@/components/layout/NavigationBar.vue';
 import AppHeader from '@/components/layout/AppHeader.vue';
 import { ref } from 'vue';
 import CategoriesFilter from '@/components/layout/CategoriesFilter.vue';
+import { useStore } from 'vuex';
 
 withDefaults(
   defineProps<{
@@ -12,6 +13,9 @@ withDefaults(
     withCategories: true,
   },
 );
+
+const store = useStore();
+const layoutStore = store.state.layoutStore;
 
 const drawer = ref(false);
 
@@ -34,6 +38,13 @@ function handleNavClick() {
         <CategoriesFilter v-if="withCategories" />
       </div>
     </div>
+
+    <v-progress-linear
+      v-if="layoutStore.loading"
+      class="progress-loading"
+      indeterminate
+      color="primary"
+    ></v-progress-linear>
   </div>
 </template>
 
@@ -66,6 +77,11 @@ function handleNavClick() {
   overflow-x: hidden;
   padding: 20px 20px 60px;
   margin-bottom: 50px;
+  position: relative;
+}
+
+.progress-loading {
+  position: absolute;
 }
 
 @media screen and (min-width: $desktop-breakpoint) {
